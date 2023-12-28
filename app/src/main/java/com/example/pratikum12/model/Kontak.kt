@@ -1,11 +1,15 @@
 package com.example.pratikum12.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Kontak(
     val id: Int,
-    val name: String,
+    val nama: String,
+    @SerialName("email")
     val alamat: String,
-    val telpon: String,
+    @SerialName("nohp")
+    val telpon: String
+
 )
