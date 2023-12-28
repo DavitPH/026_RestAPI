@@ -4,6 +4,7 @@ import com.example.pratikum12.R
 import com.example.pratikum12.model.Kontak
 import com.example.pratikum12.ui.ui.home.viewmodel.KontakUIState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,64 +34,78 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun HomeScreen(
-    kontakUIState: KontakUIState, retryAction: () -> Unit, modifier: Modifier = Modifier
-) {
-
+    kontakUIState: KontakUIState,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier
+){
     when (kontakUIState) {
         is KontakUIState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
         is KontakUIState.Success -> KontakLayout(
-            kontak = kontakUIState.kontak, modifier = modifier.fillMaxWidth()
+            kontak = kontakUIState.kontak,
+            modifier = modifier.fillMaxWidth()
         )
 
         is KontakUIState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
     }
-
 }
 
 /**
- * The home screen displaying the loading message.
+ * The home screen displaying th eloading message
  */
 @Composable
-fun OnLoading(modifier: Modifier = Modifier) {
+fun OnLoading(
+    modifier: Modifier = Modifier
+){
     Image(
         modifier = modifier.size(200.dp),
-        painter = painterResource(R.drawable.loading_img),
-        contentDescription = stringResource(R.string.loading)
+        painter = painterResource(id = R.drawable.loading_img),
+        contentDescription = stringResource(id = R.string.loading)
     )
 }
 
 /**
- * The home screen displaying error message with re-attempt button.
+ * The home screen displaying error message with re-attempt button
  */
 @Composable
-fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier) {
+fun OnError(
+    retryAction: () -> Unit, modifier: Modifier = Modifier
+){
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
+            painter = painterResource(
+                id = R.drawable.ic_connection_error),
+            contentDescription = ""
         )
-        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
+        Text(
+            text = stringResource(id = R.string.loading_failed),
+            modifier = Modifier.padding(16.dp)
+        )
         Button(onClick = retryAction) {
-            Text(stringResource(R.string.retry))
+            Text(text = stringResource(id = R.string.retry))
         }
     }
 }
 
 @Composable
-fun KontakLayout(kontak: List<Kontak>, modifier: Modifier = Modifier) {
+fun KontakLayout(
+    kontak: List<Kontak>,
+    modifier: Modifier = Modifier
+){
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
+    ){
         items(kontak) { kontak ->
-            KontakCard(kontak = kontak, modifier = Modifier.fillMaxWidth())
+            KontakCard(kontak = kontak, modifier = Modifier
+                .fillMaxWidth()
+                .clickable {})
         }
     }
-
 }
 
 @Composable
@@ -99,7 +114,7 @@ fun KontakCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier,
+        modifier = Modifier,
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
@@ -111,13 +126,14 @@ fun KontakCard(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
-                    text = kontak.name,
-                    style = MaterialTheme.typography.titleLarge,
+                    text = kontak.nama,
+                    style = MaterialTheme.typography.titleLarge
                 )
-                Spacer(Modifier.weight(1f))
+                Spacer(modifier = Modifier.weight(1f))
+
                 Icon(
                     imageVector = Icons.Default.Phone,
-                    contentDescription = null,
+                    contentDescription = null
                 )
                 Text(
                     text = kontak.telpon,
@@ -129,6 +145,5 @@ fun KontakCard(
                 style = MaterialTheme.typography.titleMedium
             )
         }
-
     }
 }
