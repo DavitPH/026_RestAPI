@@ -1,5 +1,6 @@
 package com.example.pratikum12.ui.ui
 
+import PengelolaHalaman
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -27,44 +28,34 @@ import com.example.pratikum12.ui.ui.theme.PenyediaViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KontakApp(
-    homeViewModel: HomeViewModel = viewModel(
-        factory = PenyediaViewModel.Factory)
+
 ){
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold (
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { TopAppBarKontak( canNavigateBack = true, scrollBehavior = scrollBehavior) }
     ){
         Surface (
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
         ){
-            HomeScreen(
-                kontakUIState = homeViewModel.kontakUIState,
-                retryAction = homeViewModel::getKontak
-            )
+            PengelolaHalaman()
         }
     }
 }
 
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBarKontak(
+    title: String,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
-    scrollBehavior: TopAppBarScrollBehavior,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
     modifier: Modifier = Modifier
 ){
     CenterAlignedTopAppBar(
-        title = {
-            Text(
-                text = stringResource(id = R.string.app_name),
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
+        title = { Text(title) },
         modifier = modifier,
         scrollBehavior = scrollBehavior,
         navigationIcon = {
