@@ -11,30 +11,45 @@ import com.example.pratikum12.repository.KontakRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-sealed class KontakUIState{
+sealed class KontakUIState {
     data class Success(val kontak: List<Kontak>) : KontakUIState()
+
     object Error : KontakUIState()
+
     object Loading : KontakUIState()
 }
-
-class HomeViewModel(private val kontakRepository: KontakRepository) : ViewModel() {
+class HomeViewModel (private val kontakRepository: KontakRepository) : ViewModel(){
     var kontakUIState: KontakUIState by mutableStateOf(KontakUIState.Loading)
         private set
 
-    init{
+    init {
         getKontak()
     }
 
-    fun getKontak(){
+
+    fun getKontak() {
         viewModelScope.launch {
             kontakUIState = KontakUIState.Loading
             kontakUIState = try {
                 KontakUIState.Success(kontakRepository.getKontak())
             } catch (e: IOException){
                 KontakUIState.Error
-            } catch (e: retrofit2.HttpException){
+            } catch (e: HttpException){
+                KontakUIState.Error
+            }
+        }
+    }
+
+    fun deleteKontak(id: Int) {
+        viewModelScope.launch {
+            try {
+                kontakRepository.deleteKontak(id)
+            } catch (e: IOException) {
+                KontakUIState.Error
+            } catch (e: HttpException) {
                 KontakUIState.Error
             }
         }
     }
 }
+
