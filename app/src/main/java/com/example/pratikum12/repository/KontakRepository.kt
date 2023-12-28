@@ -8,6 +8,9 @@ interface KontakRepository{
 
     suspend fun insertKontak(kontak: Kontak)
 
+    suspend fun updateKontak(id: Int, kontak: Kontak)
+
+
 }
 
 class NetworkKontakRepository(
@@ -17,6 +20,10 @@ class NetworkKontakRepository(
 
     override suspend fun insertKontak(kontak: Kontak) {
         kontakApiService.insertKontak(kontak)
+    }
+
+    override suspend fun updateKontak(id: Int, kontak: Kontak) {
+        kontakApiService.updateKontak(id, kontak)
     }
 
 }
