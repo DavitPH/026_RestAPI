@@ -1,6 +1,8 @@
 package com.example.pratikum12.ui.ui.home.viewmodel
 
 import android.net.http.HttpException
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,6 +13,7 @@ import com.example.pratikum12.repository.KontakRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 
+
 sealed class KontakUIState {
     data class Success(val kontak: List<Kontak>) : KontakUIState()
 
@@ -18,6 +21,7 @@ sealed class KontakUIState {
 
     object Loading : KontakUIState()
 }
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 class HomeViewModel (private val kontakRepository: KontakRepository) : ViewModel(){
     var kontakUIState: KontakUIState by mutableStateOf(KontakUIState.Loading)
         private set
@@ -27,6 +31,7 @@ class HomeViewModel (private val kontakRepository: KontakRepository) : ViewModel
     }
 
 
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun getKontak() {
         viewModelScope.launch {
             kontakUIState = KontakUIState.Loading

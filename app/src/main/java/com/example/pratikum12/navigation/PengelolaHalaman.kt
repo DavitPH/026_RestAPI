@@ -1,7 +1,10 @@
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHost
+
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import com.example.pratikum12.ui.ui.home.screen.DestinasiEntry
 import com.example.pratikum12.ui.ui.home.screen.DestinasiHome
 import com.example.pratikum12.ui.ui.home.screen.EntryKontakScreen
@@ -10,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
 fun PengelolaHalaman (navController: NavHostController = rememberNavController()){
 

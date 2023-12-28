@@ -1,5 +1,7 @@
 package com.example.pratikum12.ui.ui.home.screen
 
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import com.example.pratikum12.R
 import com.example.pratikum12.model.Kontak
 import com.example.pratikum12.ui.ui.home.viewmodel.KontakUIState
@@ -54,6 +56,7 @@ object DestinasiHome : DestinasiNavigasi {
 
 
 
+@RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
@@ -94,8 +97,8 @@ fun HomeScreen(
             modifier = Modifier.padding(innerPadding),
             onDetailClick = onDetailClick,
             onDeleteClick = {
-                viewModel.deletekontak(it.id)
                 viewModel.getKontak()
+                viewModel.deleteKontak(it.id)
             }
         )
     }
